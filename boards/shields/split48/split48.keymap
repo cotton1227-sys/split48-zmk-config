@@ -1,29 +1,61 @@
 // This file was generated from a template. Edit it to match your keyboard.
-// See https://zmk.dev/docs/development/hardware-integration/new-shield for more instructions.
-
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
 
+#define JP_DQUOTE      AT               // "
+#define JP_AMPERSAND   CARET            // &
+#define JP_QUOTE       AMPERSAND        // '
+#define JP_EQUAL       UNDER            // =
+#define JP_CARET       EQUAL            // ^
+#define JP_YEN         INT3             // ¥ (0x89)
+#define JP_PLUS        COLON            // +
+#define JP_TILDE       LS(EQUAL)        // ~
+#define JP_PIPE        LS(INT3)         // |
+#define JP_AT          LEFT_BRACKET     // @
+#define JP_COLON       SINGLE_QUOTE     // :
+#define JP_ASTERISK    LS(SINGLE_QUOTE) // *
+#define JP_BACKQUOTE   LS(LEFT_BRACKET) // `
+#define JP_UNDERSCORE  INT1             // _ (0x87)
+#define JP_LBRACKET    RIGHT_BRACKET    // [
+#define JP_RBRACKET    BACKSLASH        // ]
+#define JP_LPAREN      LS(N8)           // (
+#define JP_RPAREN      LS(N9)           // )
+#define JP_MINUS       MINUS            // - (長音)
+
 / {
+    behaviors {
+        m2: m2 { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp N2>, <&kp JP_DQUOTE>;  mods = <(MOD_LSFT|MOD_RSFT)>; };
+        m6: m6 { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp N6>, <&kp JP_AMPERSAND>;  mods = <(MOD_LSFT|MOD_RSFT)>; };
+        m7: m7 { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp N7>, <&kp JP_QUOTE>;  mods = <(MOD_LSFT|MOD_RSFT)>; };
+        m8: m8 { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp N8>, <&kp JP_LPAREN>;  mods = <(MOD_LSFT|MOD_RSFT)>; };
+        m9: m9 { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp N9>, <&kp JP_RPAREN>;  mods = <(MOD_LSFT|MOD_RSFT)>; };
+        m_semi: m_semi { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp SEMI>, <&kp JP_PLUS>; mods = <(MOD_LSFT|MOD_RSFT)>; };
+        m_col: m_col { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp JP_COLON>, <&kp JP_ASTERISK>; mods = <(MOD_LSFT|MOD_RSFT)>; };
+        m_caret: m_caret { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp JP_CARET>, <&kp JP_TILDE>; mods = <(MOD_LSFT|MOD_RSFT)>; };
+        m_yen: m_yen { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp JP_YEN>, <&kp JP_PIPE>; mods = <(MOD_LSFT|MOD_RSFT)>; };
+        m_minus: m_minus { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp JP_MINUS>, <&kp JP_EQUAL>; mods = <(MOD_LSFT|MOD_RSFT)>; };
+        m_u: m_u { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp JP_UNDERSCORE>, <&kp JP_YEN>; mods = <(MOD_LSFT|MOD_RSFT)>; };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
         default_layer {
             bindings = <
-                &kp ESC   &kp Q  &kp W  &kp E  &kp R  &kp T        &kp Y  &kp U  &kp I      &kp O    &kp P     &kp DEL
-                &kp TAB   &kp A  &kp S  &kp D  &kp F  &kp G        &kp H  &kp J  &kp K      &kp L    &kp SEMI  &kp SQT
-                &kp LSHFT &kp Z  &kp X  &kp C  &kp V  &kp B        &kp N  &kp M  &kp COMMA  &kp DOT  &kp FSLH  &kp RSHFT
-                &kp LCTRL &kp LGUI &kp LALT &mo 1 &kp INT5 &kp SPACE    &kp BSPC &kp RET &kp INT4 &mo 2 &kp RGUI &kp RCTRL
+                &kp ESC   &kp Q    &kp W    &kp E    &kp R &kp T           &kp Y    &kp U    &kp I      &kp O    &kp P           &mo 2 
+                &kp TAB   &kp A    &kp S    &kp D    &kp F &kp G           &kp H    &kp J    &kp K      &kp L    &kp JP_LBRACKET &kp JP_RBRACKET
+                &kp LSHFT &kp Z    &kp X    &kp C    &kp V &kp B           &kp N    &kp M    &kp COMMA  &kp DOT  &kp UP          &kp FSLH 
+                &kp LCTRL &kp LGUI &kp LALT &kp INT5 &mo 1 &kp SPACE       &kp RET  &kp BSPC &kp INT4   &kp LEFT &kp DOWN        &kp RIGHT
             >;
         };
 
-        // レイヤー1 (数字・記号)
+        // レイヤー1 (数字・記号・テンキー)
         lower_layer {
             bindings = <
-                &kp GRAVE &kp N1 &kp N2 &kp N3 &kp N4 &kp N5       &kp N6 &kp N7 &kp N8 &kp N9 &kp N0 &kp MINUS
-                &trans    &trans &trans &trans &trans &trans       &kp LEFT &kp DOWN &kp UP &kp RIGHT &kp EQUAL &kp BSLH
-                &trans    &trans &trans &trans &trans &trans       &kp LBKT &kp RBKT &trans &trans &trans &trans
-                &trans    &trans &trans &trans &trans &trans       &trans   &trans   &trans &trans &trans &trans
+                &trans &m7    &m8    &m9    &kp N0 &trans          &m_minus  &m_caret &m_yen &trans &trans &trans
+                &trans &kp N4 &kp N5 &m6    &trans &trans          &kp JP_AT &trans   &trans &trans &trans &trans
+                &trans &kp N1 &m2    &kp N3 &trans &trans          &m_semi   &m_col   &m_u &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans          &trans    &trans   &trans &trans &trans &trans
             >;
         };
 
@@ -34,16 +66,6 @@
                 &trans &trans &trans &trans &trans &trans          &kp HOME &kp PGDN &kp PGUP &kp END &trans &trans
                 &trans &trans &trans &trans &trans &trans          &kp C_PREV &kp C_VOL_DN &kp C_VOL_UP &kp C_NEXT &kp C_PP &trans
                 &trans &trans &trans &trans &trans &trans          &trans &trans &trans &trans &trans &trans
-            >;
-        };
-
-        // レイヤー3 (Studioで自由に追加・編集用)
-        extra_layer {
-            bindings = <
-                &trans &trans &trans &trans &trans &trans    &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans    &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans    &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans    &trans &trans &trans &trans &trans &trans
             >;
         };
     };
